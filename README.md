@@ -28,5 +28,4 @@ This script is a simple api call that will change your provided list of `pull re
 --data  '{ "base": "main" }'
 ```
 
-
 Hope this is helpful.
