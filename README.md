@@ -40,6 +40,10 @@ respectively:
 
 ## Example run ##
 
+1. Make new `main` branch, based on `master`
+2. Set `main` as the default branch
+3. Run this:
+
 ```
 $ export GITHUB_TOKEN=yeahrightnicetrynotmine
 $ export GITHUB_USER=krayon
@@ -68,6 +72,10 @@ Enter 1 or more PR numbers seperated with a space
   "changed_files": 1
 }
 ```
+
+4. Delete `master`
+
+## Notes ##
 
 This script is a simple api call that will change your provided list of `pull
 requests` to retarget to the new `main` branch. Or whatever branch you want.
