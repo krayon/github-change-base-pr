@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # API call docs:
 #     https://developer.github.com/v3/pulls/#update-a-pull-request
