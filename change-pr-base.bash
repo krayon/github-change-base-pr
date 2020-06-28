@@ -12,11 +12,11 @@ _github_repo=""
 _github_url=""
 _github_base_old=""
 _github_base_new=""
-[ ! -z "${GITHUB_TOKEN}"    ] && _github_token="${GITHUB_TOKEN}"
-[ ! -z "${GITHUB_USER}"     ] && _github_user="${GITHUB_USER}"
-[ ! -z "${GITHUB_REPO}"     ] && _github_repo="${GITHUB_REPO}"
-[ ! -z "${GITHUB_BASE_OLD}" ] && _github_base_old="${GITHUB_BASE_OLD}"
-[ ! -z "${GITHUB_BASE_NEW}" ] && _github_base_new="${GITHUB_BASE_NEW}"
+[ -n "${GITHUB_TOKEN}"    ] && _github_token="${GITHUB_TOKEN}"
+[ -n "${GITHUB_USER}"     ] && _github_user="${GITHUB_USER}"
+[ -n "${GITHUB_REPO}"     ] && _github_repo="${GITHUB_REPO}"
+[ -n "${GITHUB_BASE_OLD}" ] && _github_base_old="${GITHUB_BASE_OLD}"
+[ -n "${GITHUB_BASE_NEW}" ] && _github_base_new="${GITHUB_BASE_NEW}"
 
 showhelp() {
 cat <<EOF
@@ -65,7 +65,7 @@ EOF
 }
 
 # URL in variable
-[ ! -z "${GITHUB_REPO_API_URL}" ] && _github_url="${GITHUB_REPO_API_URL}"
+[ -n "${GITHUB_REPO_API_URL}" ] && _github_url="${GITHUB_REPO_API_URL}"
 
 # URL on command line
 [ ${#} -gt 0 ] && _github_url="${1}" && shift 1
@@ -121,7 +121,7 @@ change_all_base_branch() {
     [ ${#} -gt 0 ] && old_base="${1}"
 
     (\
-        while read line; do #{
+        while read -r line; do #{
             jq -r '.url + "|||" + .base.ref' <<<"${line}"
         done < <(\
             curl \
@@ -132,7 +132,7 @@ change_all_base_branch() {
         )\
     )\
     |sed -n '/|||'"${old_base}"'$/s#\(^.*\)|||'"${old_base}"'$#\1#p' \
-    |while read url; do #{
+    |while read -r url; do #{
         curl \
             -X PATCH \
             -H "Authorization: token ${_github_token}" \
@@ -147,16 +147,16 @@ echo
 echo    "Enter a list of Pull Request numbers to target to 'main'" 
 echo    "Enter 1 or more PR numbers seperated with a space"
 echo -n "(or "*" for all PRs based on <master>): "
-read pr_list
+read -r pr_list
 
 [ "${pr_list}" == "*" ] && {
-    change_all_base_branch ${_github_base_new} ${_github_base_old}
+    change_all_base_branch "${_github_base_new}" "${_github_base_old}"
     exit $?
 }
 
 # List all the PR numbers you want to change
 for pr in ${pr_list}; do #{
-    change_base_branch "${pr}" ${_github_base_new}
+    change_base_branch "${pr}" "${_github_base_new}"
 done #}
 
 # vim:ts=4:tw=80:sw=4:et:ai:si
