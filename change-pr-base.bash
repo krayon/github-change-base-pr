@@ -121,7 +121,7 @@ change_all_base_branch() {
     [ ${#} -gt 0 ] && old_base="${1}"
 
     (\
-        while read line; do #{
+        while read -r line; do #{
             jq -r '.url + "|||" + .base.ref' <<<"${line}"
         done < <(\
             curl \
@@ -132,7 +132,7 @@ change_all_base_branch() {
         )\
     )\
     |sed -n '/|||'"${old_base}"'$/s#\(^.*\)|||'"${old_base}"'$#\1#p' \
-    |while read url; do #{
+    |while read -r url; do #{
         curl \
             -X PATCH \
             -H "Authorization: token ${_github_token}" \
@@ -147,7 +147,7 @@ echo
 echo    "Enter a list of Pull Request numbers to target to 'main'" 
 echo    "Enter 1 or more PR numbers seperated with a space"
 echo -n "(or "*" for all PRs based on <master>): "
-read pr_list
+read -r pr_list
 
 [ "${pr_list}" == "*" ] && {
     change_all_base_branch ${_github_base_new} ${_github_base_old}
