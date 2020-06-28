@@ -12,11 +12,11 @@ _github_repo=""
 _github_url=""
 _github_base_old=""
 _github_base_new=""
-[ ! -z "${GITHUB_TOKEN}"    ] && _github_token="${GITHUB_TOKEN}"
-[ ! -z "${GITHUB_USER}"     ] && _github_user="${GITHUB_USER}"
-[ ! -z "${GITHUB_REPO}"     ] && _github_repo="${GITHUB_REPO}"
-[ ! -z "${GITHUB_BASE_OLD}" ] && _github_base_old="${GITHUB_BASE_OLD}"
-[ ! -z "${GITHUB_BASE_NEW}" ] && _github_base_new="${GITHUB_BASE_NEW}"
+[ -n "${GITHUB_TOKEN}"    ] && _github_token="${GITHUB_TOKEN}"
+[ -n "${GITHUB_USER}"     ] && _github_user="${GITHUB_USER}"
+[ -n "${GITHUB_REPO}"     ] && _github_repo="${GITHUB_REPO}"
+[ -n "${GITHUB_BASE_OLD}" ] && _github_base_old="${GITHUB_BASE_OLD}"
+[ -n "${GITHUB_BASE_NEW}" ] && _github_base_new="${GITHUB_BASE_NEW}"
 
 showhelp() {
 cat <<EOF
@@ -65,7 +65,7 @@ EOF
 }
 
 # URL in variable
-[ ! -z "${GITHUB_REPO_API_URL}" ] && _github_url="${GITHUB_REPO_API_URL}"
+[ -n "${GITHUB_REPO_API_URL}" ] && _github_url="${GITHUB_REPO_API_URL}"
 
 # URL on command line
 [ ${#} -gt 0 ] && _github_url="${1}" && shift 1
