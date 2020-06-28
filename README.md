@@ -1,5 +1,7 @@
 # Change base branch of all Pull Requests #
 
+## _PRIVATE PROJECT, NOT A PRODUCT OF [GitHub](https://github.com/)_ ##
+
 ## Links to docs ##
 
 * [API call to update pull request](https://developer.github.com/v3/pulls/#update-a-pull-request)

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# PRIVATE PROJECT, NOT A PRODUCT OF GitHub
+
 # API call docs:
 #     https://developer.github.com/v3/pulls/#update-a-pull-request
 
