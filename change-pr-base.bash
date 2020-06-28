@@ -150,13 +150,13 @@ echo -n "(or "*" for all PRs based on <master>): "
 read -r pr_list
 
 [ "${pr_list}" == "*" ] && {
-    change_all_base_branch ${_github_base_new} ${_github_base_old}
+    change_all_base_branch "${_github_base_new}" "${_github_base_old}"
     exit $?
 }
 
 # List all the PR numbers you want to change
 for pr in ${pr_list}; do #{
-    change_base_branch "${pr}" ${_github_base_new}
+    change_base_branch "${pr}" "${_github_base_new}"
 done #}
 
 # vim:ts=4:tw=80:sw=4:et:ai:si
