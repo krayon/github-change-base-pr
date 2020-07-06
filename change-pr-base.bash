@@ -106,7 +106,10 @@ change_base_branch() {
     pr="${1}" && shift 1
 
     new_base="main"
-    [ ${#} -gt 0 ] && new_base="${1}"
+    [ ${#} -gt 0 ] && {
+        [ -n "${1}" ] && new_base="${1}"
+        shift 1
+    }
 
     curl \
         -X PATCH \
@@ -118,9 +121,15 @@ change_base_branch() {
 # Usage: change_all_base_branch [<new_base> [<old_base>]]
 change_all_base_branch() {
     new_base="main"
-    [ ${#} -gt 0 ] && new_base="${1}" && shift 1
+    [ ${#} -gt 0 ] && {
+        [ -n "${1}" ] && new_base="${1}"
+        shift 1
+    }
     old_base="master"
-    [ ${#} -gt 0 ] && old_base="${1}"
+    [ ${#} -gt 0 ] && {
+        [ -n "${1}" ] && old_base="${1}"
+        shift 1
+    }
 
     (\
         while read -r line; do #{
